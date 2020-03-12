@@ -26,7 +26,7 @@ public class KeywordEngineTest
 	public Base base;
 	public WebElement element;
 	
-	public final String SCENARIO_SHEET_PATH = "C:\\Users\\shwetamahajan\\eclipse\\KeywordDrivenTest\\src\\main\\java\\com\\keyworddriven\\scenario\\Fb_scenarios.xlsx";
+	public final String SCENARIO_SHEET_PATH = "C:\\Users\\shwetamahajan\\Documents\\Fb_scenarios.xlsx";
 	
 	public void startExecution(String sheetName) throws InterruptedException 
 	{
@@ -89,6 +89,14 @@ public class KeywordEngineTest
 						driver.get(value);
 					}
 
+				case "get title":
+					if(value.isEmpty() || value.equals("NA")) {
+						String title = driver.getTitle();
+						System.out.println("Title = "+title);
+					}
+					locatorColValue = null;
+					break;
+					
 				case "quit":
 					driver.quit();
 					break;
@@ -100,7 +108,7 @@ public class KeywordEngineTest
 				switch (locatorName) {
 				case "id":
 					Thread.sleep(2000);
-					WebElement element = driver.findElement(By.id(locatorVal));
+					element = driver.findElement(By.id(locatorVal));
 					Thread.sleep(2000);
 					System.out.println(element);
 					if (action.equalsIgnoreCase("sendkeys")) {
@@ -110,14 +118,53 @@ public class KeywordEngineTest
 					} else if (action.equalsIgnoreCase("click")) {
 						Thread.sleep(1000);
 						element.click();
+					}else if (action.equalsIgnoreCase("isDisplayed")) {
+						element.isDisplayed();
+					}else if(action.equalsIgnoreCase("getText")) {
+						element.getText();
 					}
 					break;
-
-				case "link text":
-					 element = driver.findElement(By.linkText(locatorVal));
-					 element.click();
-					 locatorName = null;
-					 break;
+					
+				case "xpath":
+					Thread.sleep(2000);
+					element = driver.findElement(By.xpath(locatorVal));
+					Thread.sleep(2000);
+					System.out.println(element);
+					if (action.equalsIgnoreCase("sendkeys")) {
+						element.clear();
+						Thread.sleep(2000);
+						element.sendKeys(value);
+					} else if (action.equalsIgnoreCase("click")) {
+						Thread.sleep(1000);
+						element.click();
+					}else if (action.equalsIgnoreCase("isDisplayed")) {
+						element.isDisplayed();
+					}else if(action.equalsIgnoreCase("getText")) {
+						String text = element.getText();
+						System.out.println("Text = "+text);
+					}
+					break;
+				
+				case "cssSelector":
+					Thread.sleep(2000);
+					element = driver.findElement(By.cssSelector((locatorVal)));
+					Thread.sleep(2000);
+					System.out.println(element);
+					if (action.equalsIgnoreCase("sendkeys")) {
+						element.clear();
+						Thread.sleep(2000);
+						element.sendKeys(value);
+					} else if (action.equalsIgnoreCase("click")) {
+						Thread.sleep(1000);
+						element.click();
+					}else if (action.equalsIgnoreCase("isDisplayed")) {
+						element.isDisplayed();
+					}else if(action.equalsIgnoreCase("getText")) {
+						String text = element.getText();
+						System.out.println("Text = "+text);
+					}
+					break;
+				
 					 
 				 case "name":
 					 element = driver.findElement(By.name(locatorVal));
@@ -132,7 +179,41 @@ public class KeywordEngineTest
 					 {
 							Thread.sleep(1000);
 							element.click();
-					 }
+					 }else if(action.equalsIgnoreCase("getText")) {
+							element.getText();
+					}
+					 break;
+					 
+				 case "className":
+						Thread.sleep(2000);
+						element = driver.findElement(By.className(locatorVal));
+						Thread.sleep(2000);
+						System.out.println(element);
+						if (action.equalsIgnoreCase("sendkeys")) {
+							element.clear();
+							Thread.sleep(2000);
+							element.sendKeys(value);
+						} else if (action.equalsIgnoreCase("click")) {
+							Thread.sleep(1000);
+							element.click();
+						}else if (action.equalsIgnoreCase("isDisplayed")) {
+							element.isDisplayed();
+						}else if(action.equalsIgnoreCase("getText")) {
+							element.getText();
+						}
+						break;
+					
+					 
+				 case "linkText":
+					 element = driver.findElement(By.linkText(locatorVal));
+					 element.click();
+					 locatorName = null;
+					 break;
+					 
+				 case "partialLinkText":
+					 element = driver.findElement(By.partialLinkText(locatorVal));
+					 element.click();
+					 locatorName = null;
 					 break;
 					 
 				default:
